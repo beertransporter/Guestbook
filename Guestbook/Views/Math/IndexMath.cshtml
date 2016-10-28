@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Guestbook.Models.GuestbookMath>
+
+@{
+    ViewBag.Title = "IndexMath";
+}
+
+<h2>IndexMath</h2>
+<p>
+    <a href="/Math/CreateMath">Add Math</a>
+
+</p>
+
+<section class="contact">
+    <header>
+        @foreach (Guestbook.Models.GuestbookMath i in Model)
+        {
+           
+                    if (i.TypeId == 1)
+                    {
+                    <h3>@i.FirstNumber + @i.SecondNumber = @i.Total</h3>
+                    }
+                    else if (i.TypeId == 2)
+                    {
+                    <h3>@i.FirstNumber - @i.SecondNumber = @i.Total</h3>
+                    }
+                    else if (i.TypeId == 3)
+                    {
+                    <h3>@i.FirstNumber * @i.SecondNumber = @i.Total</h3>
+                    }
+                    else if (i.TypeId == 4)
+                    {
+                    <h3>@i.FirstNumber / @i.SecondNumber = @i.Total</h3>
+                    }
+                
+        }
+        </header>
+                <p>
+                </p>
+
+            </section>
+
+
+

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Guestbook.Models.GuestbookMath>
+
+@{
+    ViewBag.Title = "Calculator";
+}
+<h2>Calculator</h2>
+<br>
+<br />
+<form method="post" action="">
+    @using (Html.BeginForm())
+    {
+        <fieldset>
+            Number 1:
+            <br />
+            @*<input type="text" name="FirstNumber" maxlength="9" />*@
+            @Html.TextBox("FirstNumber") 
+            @Html.ValidationMessage("FirstNumber")
+            <br />
+            <br />
+            Number 2:
+            <br />
+            @*<input type="text" name="SecondNumber" maxlength="9" />*@
+            @Html.TextBox("SecondNumber")  
+            @Html.ValidationMessage("SecondNumber")
+            <br />
+            <br />
+            @*<input type="submit" value="Total" />*@
+            <button name="action" value="+">+</button>
+            <button name="action" value="-">-</button>
+            <button name="action" value="*">*</button>
+            <button name="action" value="/">/</button>
+        
+        </fieldset>
+    }
+</form>
+
+
+@foreach (Guestbook.Models.GuestbookMath a in Model)
+{
+    
+    if (a.TypeId == 1)
+    {
+        <h3>@a.FirstNumber + @a.SecondNumber = @a.Total</h3>
+
+    }
+    else if (a.TypeId == 2)
+    {
+        <h3>@a.FirstNumber - @a.SecondNumber = @a.Total</h3>
+    }
+    else if (a.TypeId == 3)
+    {
+        <h3>@a.FirstNumber * @a.SecondNumber = @a.Total</h3>
+    }
+    else if (a.TypeId == 4)
+    {
+        <h3>@a.FirstNumber / @a.SecondNumber = @a.Total</h3>
+    
+    }
+
+ }
+
+@ViewBag.DerividZero
+
+@*@foreach (var f in ViewBag.List)
+{
+    <section class="contact">
+        <header>
+            <h3>@f.Total</h3>
+        </header>
+        <p>
+            @f.FirstNumber 
+        </p>
+    </section>
+}
+
+@Html.ValidationSummary()*@
+
+
+
+
+
+
