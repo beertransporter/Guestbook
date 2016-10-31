@@ -27,6 +27,7 @@ namespace Guestbook.Controllers
         {
             var lists = _db.Maths.OrderByDescending(id => id.Id).Take(1);
             return View("CreateMath", lists.ToList());
+            
         }
 
         public ActionResult IndexMath()
@@ -59,64 +60,66 @@ namespace Guestbook.Controllers
         public ActionResult CreateMath(GuestbookMath entryMath, string action)
         {
 
-
             if (ModelState.IsValid)
             {
-                if (action == "+")
+                switch (action)
                 {
-                    entryMath.TypeId = 1;
-                    entryMath.Total = new Functions().GetSum(entryMath.FirstNumber, entryMath.SecondNumber);
-                    _db.Maths.Add(entryMath);
-                    _db.SaveChanges();
-                    log.Debug(entryMath.FirstNumber + " + " + entryMath.SecondNumber + " = " + entryMath.Total);
-                    GetLastValue();
-                }
-                else if (action == "-")
-                {
-                    entryMath.TypeId = 2;
-                    entryMath.Total = new Functions().GetMinus(entryMath.FirstNumber, entryMath.SecondNumber);
-                    _db.Maths.Add(entryMath);
-                    _db.SaveChanges();
-                    GetLastValue();
-
-                }
-                else if (action == "*")
-                {
-                    entryMath.TypeId = 3;
-                    entryMath.Total = new Functions().GetMult(entryMath.FirstNumber, entryMath.SecondNumber);
-                    _db.Maths.Add(entryMath);
-                    _db.SaveChanges();
-                    GetLastValue();
-                }
-
-
-                else if (action == "/")
-                {
-
-                    if (entryMath.SecondNumber == 0)
+                    case "+":
                     {
-                        ViewBag.DerividZero = "Cannot dirived by zero";
-
+                        entryMath.TypeId = 1;
+                        entryMath.Total = new Functions().GetSum(entryMath.FirstNumber, entryMath.SecondNumber);
+                        _db.Maths.Add(entryMath);
+                        _db.SaveChanges();
+                        log.Debug(entryMath.FirstNumber + " + " + entryMath.SecondNumber + " = " + entryMath.Total);
+                        GetLastValue();
+                        break;
                     }
-                    else
+                    case "-":
                     {
-                        entryMath.TypeId = 4;
-                        entryMath.Total = new Functions().GetDerived(entryMath.FirstNumber, entryMath.SecondNumber);
+                        entryMath.TypeId = 2;
+                        entryMath.Total = new Functions().GetMinus(entryMath.FirstNumber, entryMath.SecondNumber);
                         _db.Maths.Add(entryMath);
                         _db.SaveChanges();
                         GetLastValue();
+                        break;
                     }
+                    case "*":
+                    {
+                        entryMath.TypeId = 3;
+                        entryMath.Total = new Functions().GetMult(entryMath.FirstNumber, entryMath.SecondNumber);
+                        _db.Maths.Add(entryMath);
+                        _db.SaveChanges();
+                        GetLastValue();
+                        break;
+                    }
+                    case "/":
+                    {
+                        if (entryMath.SecondNumber == 0)
+                        {
+                            ViewBag.DerividZero = "Cannot dirived by zero";
+                            
 
-                    
+                        }
+                        else
+                        {
+                            entryMath.TypeId = 4;
+                            entryMath.Total = new Functions().GetDerived(entryMath.FirstNumber, entryMath.SecondNumber);
+                            _db.Maths.Add(entryMath);
+                            _db.SaveChanges();
+                            GetLastValue();
+                        }
+                        break;
+                    }
                 }
-                
-
             }
 
-
-
-            var list = _db.Maths.OrderByDescending(id => id.Id).Take(0);
-            return View(list.ToList());
+           
+            //GetLastValue();
+            //var list = _db.Maths.OrderByDescending(id => id.Id).Take(0);
+            //ViewBag.List = list;
+            //return View("CreateMath", lists.ToList());
+            return View("CreateMath");
+            //return View(list.ToList());
 
         }
 
